@@ -11,7 +11,7 @@ public class VotoDAOImpl implements VotoDAO {
 
     @Override
     public void registrarVoto(Voto voto) {
-        String sql = "INSERT INTO votos (votante_id, candidato_id) VALUES (?, ?)";
+        String sql = "INSERT INTO voto (votante_id, candidato_id) VALUES (?, ?)";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -28,7 +28,7 @@ public class VotoDAOImpl implements VotoDAO {
     @Override
     public List<Voto> obtenerTodos() {
         List<Voto> votos = new ArrayList<>();
-        String sql = "SELECT * FROM votos";
+        String sql = "SELECT * FROM voto";
 
         try (Connection con = conexionBD.obtenerConexion();
              Statement stmt = con.createStatement();
@@ -51,7 +51,7 @@ public class VotoDAOImpl implements VotoDAO {
 
     @Override
     public int contarVotosPorCandidato(int candidatoId) {
-        String sql = "SELECT COUNT(*) FROM votos WHERE candidato_id = ?";
+        String sql = "SELECT COUNT(*) FROM voto WHERE candidato_id = ?";
         int total = 0;
 
         try (Connection con = conexionBD.obtenerConexion();
@@ -73,7 +73,7 @@ public class VotoDAOImpl implements VotoDAO {
 
     @Override
     public boolean yaVoto(int votanteId) {
-        String sql = "SELECT COUNT(*) FROM votos WHERE votante_id = ?";
+        String sql = "SELECT COUNT(*) FROM voto WHERE votante_id = ?";
         boolean yaVoto = false;
 
         try (Connection con = conexionBD.obtenerConexion();

@@ -45,13 +45,18 @@ public class VotoServiceImpl implements VotoService {
     public List<ResumenVoto> obtenerResumenVotos() {
     List<ResumenVoto> resumen = new ArrayList<>();
 
-    String sql = "SELECT p.nombre AS partido, c.nombre AS candidato, v.vereda_id AS vereda, COUNT(*) AS cantidad_votos " +
-                 "FROM votos vo " +
-                 "JOIN votantes v ON vo.votante_id = v.id " +
-                 "JOIN candidatos c ON vo.candidato_id = c.id " +
-                 "JOIN partidos p ON c.partido_id = p.id " +
-                 "GROUP BY p.nombre, c.nombre, v.vereda_id " +
-                 "ORDER BY cantidad_votos DESC";
+String sql = """
+    SELECT p.nombre AS partido,
+       c.nombre AS candidato,
+       v2.nombre AS vereda,
+       COUNT(v.id) AS total_votos
+FROM voto v
+INNER JOIN votante v2 ON v.votante_id = v2.id
+INNER JOIN candidato c ON v.candidato_id = c.id
+INNER JOIN partido p ON c.partido_id = p.id
+GROUP BY p.nombre, c.nombre, v2.nombre
+ORDER BY p.nombre, c.nombre, v2.nombre
+    """;
 
     try (Connection con = conexionBD.obtenerConexion();
          PreparedStatement stmt = con.prepareStatement(sql);

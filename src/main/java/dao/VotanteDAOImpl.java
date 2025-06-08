@@ -12,7 +12,7 @@ public class VotanteDAOImpl implements VotanteDAO {
     @Override
     public List<Votante> obtenerTodos() {
         List<Votante> votantes = new ArrayList<>();
-        String sql = "SELECT * FROM votantes";
+        String sql = "SELECT * FROM votante";
 
         try (Connection con = conexionBD.obtenerConexion();
              Statement stmt = con.createStatement();
@@ -36,7 +36,7 @@ public class VotanteDAOImpl implements VotanteDAO {
     @Override
     public Votante obtenerPorId(int id) {
         Votante votante = null;
-        String sql = "SELECT * FROM votantes WHERE id = ?";
+        String sql = "SELECT * FROM votante WHERE id = ?";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -62,7 +62,7 @@ public class VotanteDAOImpl implements VotanteDAO {
     @Override
     public List<Votante> obtenerPorVereda(int veredaId) {
         List<Votante> votantes = new ArrayList<>();
-        String sql = "SELECT * FROM votantes WHERE vereda_id = ?";
+        String sql = "SELECT * FROM votante WHERE vereda_id = ?";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {

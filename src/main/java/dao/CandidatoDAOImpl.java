@@ -12,7 +12,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
     @Override
     public List<Candidato> obtenerTodos() {
         List<Candidato> candidatos = new ArrayList<>();
-        String sql = "SELECT * FROM candidatos";
+        String sql = "SELECT * FROM candidato";
 
         try (Connection con = conexionBD.obtenerConexion();
              Statement stmt = con.createStatement();
@@ -36,7 +36,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
     @Override
     public Candidato obtenerPorId(int id) {
         Candidato candidato = null;
-        String sql = "SELECT * FROM candidatos WHERE id = ?";
+        String sql = "SELECT * FROM candidato WHERE id = ?";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -62,7 +62,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
     @Override
     public List<Candidato> obtenerPorPartido(int partidoId) {
         List<Candidato> candidatos = new ArrayList<>();
-        String sql = "SELECT * FROM candidatos WHERE partido_id = ?";
+        String sql = "SELECT * FROM candidato WHERE partido_id = ?";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
