@@ -14,10 +14,15 @@ export interface ResumenVoto {
 })
 export class VotosService {
   private apiUrl = 'http://localhost:8080/sistema-votacion/api/resumen-votos'; 
+  
 
   constructor(private http: HttpClient) {}
 
   obtenerResumen(): Observable<ResumenVoto[]> {
     return this.http.get<ResumenVoto[]>(this.apiUrl);
+  }
+
+  obtenerResumenPorVereda(): Observable<ResumenVoto[]> {
+  return this.http.get<ResumenVoto[]>('http://localhost:8080/sistema-votacion/api/resumen-votos-vereda');
   }
 }

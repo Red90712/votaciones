@@ -1,53 +1,37 @@
-<div class="contenedor-tabla-grafica">
-  <div class="tabla">
 <div class="filtros">
-  <select [(ngModel)]="tipoFiltro" class="select">
+  <label for="filtro">Filtrar por:</label>
+  <select [(ngModel)]="tipoFiltro" id="filtro">
     <option value="partido">Partido</option>
     <option value="candidato">Candidato</option>
     <option value="vereda">Vereda</option>
   </select>
 
-      <input [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Buscar..." />
+  <input type="text" [(ngModel)]="filtro" placeholder="Filtro específico..." />
+  <input type="text" [(ngModel)]="busquedaGeneral" placeholder="Búsqueda general..." />
 
-    <!-- Filtro específico -->
-  <input
-    [(ngModel)]="filtro"
-    (input)="aplicarFiltro()"
-    placeholder="Buscar por {{ tipoFiltro }}..."
-    class="input-filtro"
-  />
-
-  <!-- Búsqueda general -->
-  <input
-    [(ngModel)]="busquedaGeneral"
-    (input)="aplicarFiltro()"
-    placeholder="Buscar en todo..."
-    class="input-general"
-  />
-
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Partido</th>
-          <th>Candidato</th>
-          <th>Vereda</th>
-          <th>Total Votos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let voto of resumenFiltrado">
-          <td>{{ voto.partido }}</td>
-          <td>{{ voto.candidato }}</td>
-          <td>{{ voto.vereda }}</td>
-          <td>{{ voto.totalVotos }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grafica">
-    <app-grafica-votos [datos]="resumenFiltrado" />
-  </div>
+  <button (click)="aplicarFiltro()">Aplicar filtro</button>
+  <button (click)="alternarVista()" class="vista-btn">
+    {{ modoVereda ? 'Vista detallada' : 'Vista por vereda' }}
+  </button>
 </div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Partido</th>
+      <th>Candidato</th>
+      <th>Vereda</th>
+      <th>Total Votos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of resumenFiltrado">
+      <td>{{ r.partido }}</td>
+      <td>{{ r.candidato }}</td>
+      <td>{{ r.vereda }}</td>
+      <td>{{ r.totalVotos }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<app-grafica-votos [resumenVotos]="resumenFiltrado" />

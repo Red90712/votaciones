@@ -6,6 +6,7 @@ servlet\CORSFilter.class
 service\VeredaService.class
 dao\VotanteDAOImpl.class
 service\VotanteServiceImpl.class
+servlet\ResumenVeredaServlet.class
 servlet\VeredaServlet.class
 servlet\ResumenVotosServlet.class
 dao\VeredaDAOImpl.class

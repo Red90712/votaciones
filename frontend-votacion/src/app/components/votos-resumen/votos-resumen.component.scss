@@ -1,41 +1,46 @@
-.contenedor-tabla-grafica {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-
-  .tabla {
-    flex: 2;
-  }
-
-  .grafica {
-    flex: 1;
-    max-width: 400px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th, td {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    text-align: left;
-  }
-
-  .filtros {
+.filtros {
+  margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 0.5rem;
+  align-items: center;
 
   select,
-  .input-filtro,
-  .input-general {
-    padding: 8px;
-    font-size: 14px;
-    flex: 1 1 200px;
+  input {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &.vista-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
   }
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f0f0f0;
+  }
 }

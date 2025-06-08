@@ -2,15 +2,20 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
+import { ResumenVoto } from '../../services/votos.service';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-grafica-votos',
   standalone: true,
-  imports: [CommonModule, NgChartsModule],
+  imports: [CommonModule, NgChartsModule, FormsModule, GraficaVotosComponent],
   templateUrl: './grafica-votos.component.html'
 })
 export class GraficaVotosComponent implements OnChanges {
   @Input() datos: any[] = [];
+  @Input() resumenVotos: ResumenVoto[] = [];
+
 
   public chartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],

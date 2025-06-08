@@ -62,12 +62,48 @@ ORDER BY p.nombre, c.nombre, v2.nombre
          PreparedStatement stmt = con.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
 
+    while (rs.next()) {
+    resumen.add(new ResumenVoto(
+            rs.getString("partido"),
+            rs.getString("candidato"),
+            rs.getString("vereda"),
+            rs.getInt("total_votos")
+        ));
+    }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return resumen;
+}
+
+public List<ResumenVoto> obtenerResumenPorVereda() {
+    List<ResumenVoto> resumen = new ArrayList<>();
+
+    String sql = """
+        SELECT p.nombre AS partido,
+               c.nombre AS candidato,
+               v2.nombre AS vereda,
+               COUNT(v.id) AS total_votos
+        FROM voto v
+        INNER JOIN votante v2 ON v.votante_id = v2.id
+        INNER JOIN candidato c ON v.candidato_id = c.id
+        INNER JOIN partido p ON c.partido_id = p.id
+        GROUP BY p.nombre, c.nombre, v2.nombre
+        ORDER BY p.nombre, c.nombre, v2.nombre
+    """;
+
+    try (Connection con = conexionBD.obtenerConexion();
+         PreparedStatement stmt = con.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
         while (rs.next()) {
             resumen.add(new ResumenVoto(
                 rs.getString("partido"),
                 rs.getString("candidato"),
-                rs.getInt("vereda"),
-                rs.getInt("cantidad_votos")
+                rs.getString("vereda"),
+                rs.getInt("total_votos")
             ));
         }
 
@@ -77,5 +113,6 @@ ORDER BY p.nombre, c.nombre, v2.nombre
 
     return resumen;
 }
+
 
 }

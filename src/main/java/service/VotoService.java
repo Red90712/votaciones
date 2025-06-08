@@ -10,5 +10,6 @@ public interface VotoService {
     int contarVotosPorCandidato(int candidatoId);
     boolean yaVoto(int votanteId);
     List<ResumenVoto> obtenerResumenVotos();
+    List<ResumenVoto> obtenerResumenPorVereda();
 }
 
