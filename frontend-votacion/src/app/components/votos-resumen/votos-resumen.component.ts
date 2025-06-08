@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VotosService, ResumenVoto } from '../../services/votos.service';
 import { GraficaVotosComponent } from '../grafica-votos/grafica-votos.component';
+import { GraficaCandidatosComponent } from '../grafica-candidatos/grafica-candidatos.component';
 
 @Component({
   selector: 'app-votos-resumen',
   standalone: true,
-  imports: [CommonModule, FormsModule, GraficaVotosComponent],
+  imports: [CommonModule, FormsModule, GraficaVotosComponent, GraficaCandidatosComponent],
   templateUrl: './votos-resumen.component.html',
   styleUrls: ['./votos-resumen.component.scss'],
 })
@@ -119,6 +120,21 @@ agruparPorVereda(data: ResumenVoto[]): ResumenVoto[] {
 
 trackResumen(index: number, item: ResumenVoto): string {
   return `${item.partido}-${item.candidato}-${item.vereda}`;
+}
+
+get resumenPorCandidato(): ResumenVoto[] {
+  const mapa = new Map<string, ResumenVoto>();
+
+  for (const voto of this.resumenVotos) {
+    const clave = `${voto.partido}|${voto.candidato}`;
+    if (!mapa.has(clave)) {
+      mapa.set(clave, { ...voto });
+    } else {
+      mapa.get(clave)!.totalVotos += voto.totalVotos;
+    }
+  }
+
+  return Array.from(mapa.values());
 }
 
 

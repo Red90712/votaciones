@@ -1,18 +1,26 @@
-import { Component, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { CommonModule } from '@angular/common';
-import { NgChartsModule } from 'ng2-charts';
+import { NgChartsModule, BaseChartDirective } from 'ng2-charts';
 import { ResumenVoto } from '../../services/votos.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-grafica-votos',
   standalone: true,
-  imports: [CommonModule, NgChartsModule],
-  templateUrl: './grafica-votos.component.html',
-  styleUrls: ['./grafica-votos.component.scss']
+  imports: [CommonModule, NgChartsModule, FormsModule],
+  templateUrl: './grafica-votos.component.html'
 })
 export class GraficaVotosComponent implements OnChanges {
   @Input() datos: ResumenVoto[] = [];
+
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public chartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
@@ -28,23 +36,29 @@ export class GraficaVotosComponent implements OnChanges {
   public chartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: false
+      }
     },
     animation: {
-      duration: 800,
-      easing: 'easeInOutQuart'
+      duration: 500
     }
   };
 
   public chartType: 'bar' = 'bar';
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['datos'] && this.datos?.length > 0) {
-      this.chartData.labels = this.datos.map(d => `${d.candidato} (${d.partido})`);
+    if (changes['datos'] && this.datos?.length) {
+      console.log('Actualizando gráfica con:', this.datos);
+
+      this.chartData.labels = this.datos.map(
+        d => `${d.candidato} (${d.vereda})`
+      );
       this.chartData.datasets[0].data = this.datos.map(d => d.totalVotos);
-      this.cdr.detectChanges(); // 🔁 Forzar detección de cambios
+
+      setTimeout(() => {
+        this.chart?.update();
+      });
     }
   }
 }
