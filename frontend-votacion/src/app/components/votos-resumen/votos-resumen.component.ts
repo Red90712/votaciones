@@ -9,12 +9,13 @@ import { GraficaVotosComponent } from '../grafica-votos/grafica-votos.component'
   standalone: true,
   imports: [CommonModule, FormsModule, GraficaVotosComponent],
   templateUrl: './votos-resumen.component.html',
-  styleUrls: ['./votos-resumen.component.scss']
+  styleUrls: ['./votos-resumen.component.scss'],
 })
 
 export class VotosResumenComponent implements OnInit {
   resumenVotos: ResumenVoto[] = [];
   resumenFiltrado: ResumenVoto[] = [];
+  datos: ResumenVoto[] = [];
 
   filtro: string = '';
   tipoFiltro: 'partido' | 'candidato' | 'vereda' = 'partido';
@@ -23,6 +24,7 @@ export class VotosResumenComponent implements OnInit {
   modoVereda: boolean = false;
 
   constructor(private votosService: VotosService) {}
+  
 
   ngOnInit(): void {
     this.votosService.obtenerResumen().subscribe(data => {
@@ -36,14 +38,47 @@ export class VotosResumenComponent implements OnInit {
     this.actualizarVista();
   }
 
-  actualizarVista(): void {
-    const data = this.modoVereda ? this.agruparPorVereda(this.resumenVotos) : [...this.resumenVotos];
-    this.resumenFiltrado = this.aplicarFiltroInterno(data);
+actualizarVista(): void {
+  let data = this.modoVereda
+    ? this.agruparPorVereda(this.resumenVotos)
+    : [...this.resumenVotos];
+
+  for (const item of data) {
+    item.candidato = this.limpiarNombreCandidato(item.candidato);
   }
 
-  aplicarFiltro(): void {
-    this.actualizarVista(); // cada vez que cambie el filtro se actualiza con el modo actual
+  if (this.modoVereda) {
+    data = this.ordenarPorPartidoCandidatoVereda(data);
   }
+
+  this.resumenFiltrado = this.aplicarFiltroInterno(data);
+
+  // Actualiza los datos para la gráfica
+  this.datos = [...this.resumenFiltrado];
+}
+
+  limpiarNombreCandidato(nombre: string): string {
+  return nombre.split(' (')[0].trim();
+}
+
+  aplicarFiltro(): void {
+    this.actualizarVista(); 
+  }
+
+  ordenarPorPartidoCandidatoVereda(data: ResumenVoto[]): ResumenVoto[] {
+  return data.sort((a, b) => {
+    const partidoComp = a.partido.localeCompare(b.partido);
+    if (partidoComp !== 0) return partidoComp;
+
+    const candidatoComp = a.candidato.localeCompare(b.candidato);
+    if (candidatoComp !== 0) return candidatoComp;
+
+    // Extraer número de la vereda: "Vereda 1" → 1
+    const numA = parseInt(a.vereda.replace(/\D/g, '')) || 0;
+    const numB = parseInt(b.vereda.replace(/\D/g, '')) || 0;
+    return numA - numB;
+  });
+}
 
   aplicarFiltroInterno(data: ResumenVoto[]): ResumenVoto[] {
     const f = this.filtro.toLowerCase();
@@ -62,19 +97,30 @@ export class VotosResumenComponent implements OnInit {
     });
   }
 
-  agruparPorVereda(data: ResumenVoto[]): ResumenVoto[] {
-    const mapa = new Map<string, ResumenVoto>();
+agruparPorVereda(data: ResumenVoto[]): ResumenVoto[] {
+  const mapa = new Map<string, ResumenVoto>();
 
-    for (const item of data) {
-      const clave = `${item.partido}|${item.candidato}|${item.vereda}`;
-      if (mapa.has(clave)) {
-        mapa.get(clave)!.totalVotos += item.totalVotos;
-      } else {
-        mapa.set(clave, { ...item }); // clonamos para no modificar el original
-      }
+  for (const item of data) {
+    
+    const veredaMatch = item.vereda.match(/\(Vereda\s+\d+\)/);
+    const vereda = veredaMatch ? veredaMatch[0].replace(/[()]/g, '').trim() : item.vereda;
+
+    const clave = `${item.partido}|${item.candidato}|${vereda}`;
+
+    if (mapa.has(clave)) {
+      mapa.get(clave)!.totalVotos += item.totalVotos;
+    } else {
+      mapa.set(clave, { ...item, vereda });
     }
-
-    return Array.from(mapa.values());
   }
+
+  return Array.from(mapa.values());
+}
+
+trackResumen(index: number, item: ResumenVoto): string {
+  return `${item.partido}-${item.candidato}-${item.vereda}`;
+}
+
+
 }
 

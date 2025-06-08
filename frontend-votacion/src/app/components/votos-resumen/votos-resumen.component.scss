@@ -44,3 +44,20 @@ table {
     background-color: #f0f0f0;
   }
 }
+
+.contenedor-resumen {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem; // espacio entre tabla y gráfica
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.tabla {
+  flex: 1 1 60%;
+  overflow-x: auto;
+}
+
+.grafica {
+  flex: 1 1 40%;
+}

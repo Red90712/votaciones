@@ -15,6 +15,8 @@
   </button>
 </div>
 
+<div class="contenedor-resumen">
+  <div class="tabla">
 <table>
   <thead>
     <tr>
@@ -33,5 +35,9 @@
     </tr>
   </tbody>
 </table>
+</div>
 
-<app-grafica-votos [resumenVotos]="resumenFiltrado" />
+ <div class="grafica">
+<app-grafica-votos [datos]="datos" />
+  </div>
+</div>

@@ -1,21 +1,18 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { ChartConfiguration, ChartType } from 'chart.js';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { ChartConfiguration } from 'chart.js';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ResumenVoto } from '../../services/votos.service';
-import { FormsModule } from '@angular/forms';
-
 
 @Component({
   selector: 'app-grafica-votos',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, FormsModule, GraficaVotosComponent],
-  templateUrl: './grafica-votos.component.html'
+  imports: [CommonModule, NgChartsModule],
+  templateUrl: './grafica-votos.component.html',
+  styleUrls: ['./grafica-votos.component.scss']
 })
 export class GraficaVotosComponent implements OnChanges {
-  @Input() datos: any[] = [];
-  @Input() resumenVotos: ResumenVoto[] = [];
-
+  @Input() datos: ResumenVoto[] = [];
 
   public chartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
@@ -31,18 +28,23 @@ export class GraficaVotosComponent implements OnChanges {
   public chartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
     plugins: {
-      legend: {
-        display: false
-      }
+      legend: { display: false },
+    },
+    animation: {
+      duration: 800,
+      easing: 'easeInOutQuart'
     }
   };
 
-public chartType: 'bar' = 'bar';
+  public chartType: 'bar' = 'bar';
 
-  ngOnChanges(): void {
-    if (this.datos && this.datos.length > 0) {
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['datos'] && this.datos?.length > 0) {
       this.chartData.labels = this.datos.map(d => `${d.candidato} (${d.partido})`);
       this.chartData.datasets[0].data = this.datos.map(d => d.totalVotos);
+      this.cdr.detectChanges(); // 🔁 Forzar detección de cambios
     }
   }
 }
