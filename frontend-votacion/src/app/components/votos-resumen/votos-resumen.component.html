@@ -1,0 +1,53 @@
+<div class="contenedor-tabla-grafica">
+  <div class="tabla">
+<div class="filtros">
+  <select [(ngModel)]="tipoFiltro" class="select">
+    <option value="partido">Partido</option>
+    <option value="candidato">Candidato</option>
+    <option value="vereda">Vereda</option>
+  </select>
+
+      <input [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Buscar..." />
+
+    <!-- Filtro específico -->
+  <input
+    [(ngModel)]="filtro"
+    (input)="aplicarFiltro()"
+    placeholder="Buscar por {{ tipoFiltro }}..."
+    class="input-filtro"
+  />
+
+  <!-- Búsqueda general -->
+  <input
+    [(ngModel)]="busquedaGeneral"
+    (input)="aplicarFiltro()"
+    placeholder="Buscar en todo..."
+    class="input-general"
+  />
+
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Partido</th>
+          <th>Candidato</th>
+          <th>Vereda</th>
+          <th>Total Votos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let voto of resumenFiltrado">
+          <td>{{ voto.partido }}</td>
+          <td>{{ voto.candidato }}</td>
+          <td>{{ voto.vereda }}</td>
+          <td>{{ voto.totalVotos }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grafica">
+    <app-grafica-votos [datos]="resumenFiltrado" />
+  </div>
+</div>

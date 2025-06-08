@@ -1,0 +1,41 @@
+.contenedor-tabla-grafica {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+
+  .tabla {
+    flex: 2;
+  }
+
+  .grafica {
+    flex: 1;
+    max-width: 400px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+
+  .filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  select,
+  .input-filtro,
+  .input-general {
+    padding: 8px;
+    font-size: 14px;
+    flex: 1 1 200px;
+  }
+}
+
+}
