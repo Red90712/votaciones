@@ -1,12 +1,19 @@
 package model;
 
+    /**
+ * Clase modelo que representa un resumen de votos.
+ * Se utiliza para almacenar el total de votos obtenidos por un candidato,
+ * agrupados por partido y vereda.
+ */
+
 public class ResumenVoto {
     private String partido;
     private String candidato;
     private String vereda;
     private int totalVotos;
 
-    
+//constructor
+
     public ResumenVoto(String partido, String candidato, String vereda, int totalVotos) {
         this.partido = partido;
         this.candidato = candidato;
@@ -14,7 +21,7 @@ public class ResumenVoto {
         this.totalVotos = totalVotos;
 }
 
-    
+    // Getter y setter
     public String getPartido() { return partido; }
     public void setPartido(String partido) { this.partido = partido; }
 

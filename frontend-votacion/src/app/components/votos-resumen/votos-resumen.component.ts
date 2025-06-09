@@ -54,7 +54,6 @@ actualizarVista(): void {
 
   this.resumenFiltrado = this.aplicarFiltroInterno(data);
 
-  // Actualiza los datos para la gráfica
   this.datos = [...this.resumenFiltrado];
 }
 
@@ -74,7 +73,6 @@ actualizarVista(): void {
     const candidatoComp = a.candidato.localeCompare(b.candidato);
     if (candidatoComp !== 0) return candidatoComp;
 
-    // Extraer número de la vereda: "Vereda 1" → 1
     const numA = parseInt(a.vereda.replace(/\D/g, '')) || 0;
     const numB = parseInt(b.vereda.replace(/\D/g, '')) || 0;
     return numA - numB;
