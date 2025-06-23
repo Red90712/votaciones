@@ -11,7 +11,7 @@ public class VotoDAOImpl implements VotoDAO {
 
     @Override
     public void registrarVoto(Voto voto) {
-        String sql = "INSERT INTO voto (votante_id, candidato_id) VALUES (?, ?)";
+        String sql = "INSERT INTO voto (id_votante, id_candidato) VALUES (?, ?)";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -37,8 +37,8 @@ public class VotoDAOImpl implements VotoDAO {
             while (rs.next()) {
                 votos.add(new Voto(
                     rs.getInt("id"),
-                    rs.getInt("votante_id"),
-                    rs.getInt("candidato_id")
+                    rs.getInt("id_votante"),
+                    rs.getInt("id_candidato")
                 ));
             }
 
@@ -51,7 +51,7 @@ public class VotoDAOImpl implements VotoDAO {
 
     @Override
     public int contarVotosPorCandidato(int candidatoId) {
-        String sql = "SELECT COUNT(*) FROM voto WHERE candidato_id = ?";
+        String sql = "SELECT COUNT(*) FROM voto WHERE id_candidato = ?";
         int total = 0;
 
         try (Connection con = conexionBD.obtenerConexion();
@@ -73,7 +73,7 @@ public class VotoDAOImpl implements VotoDAO {
 
     @Override
     public boolean yaVoto(int votanteId) {
-        String sql = "SELECT COUNT(*) FROM voto WHERE votante_id = ?";
+        String sql = "SELECT COUNT(*) FROM voto WHERE id_votante = ?";
         boolean yaVoto = false;
 
         try (Connection con = conexionBD.obtenerConexion();
@@ -91,5 +91,20 @@ public class VotoDAOImpl implements VotoDAO {
         }
 
         return yaVoto;
+    }
+
+    @Override
+    public boolean insertar(int idVotante, int idCandidato) {
+        String sql = "INSERT INTO voto (id_votante, id_candidato) VALUES (?, ?)";
+        try (Connection con = conexionBD.obtenerConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idVotante);
+            ps.setInt(2, idCandidato);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -61,3 +61,24 @@ table {
 .grafica {
   flex: 1 1 40%;
 }
+
+.acciones-principales {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+
+  .btn-registro {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}

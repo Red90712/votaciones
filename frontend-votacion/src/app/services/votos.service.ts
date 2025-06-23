@@ -25,4 +25,9 @@ export class VotosService {
   obtenerResumenPorVereda(): Observable<ResumenVoto[]> {
   return this.http.get<ResumenVoto[]>('http://localhost:8080/sistema-votacion/api/resumen-votos-vereda');
   }
+
+registrarVoto(voto: any): Observable<any> {
+  return this.http.post('http://localhost:8080/sistema-votacion/api/votos', voto);
+}
+
 }

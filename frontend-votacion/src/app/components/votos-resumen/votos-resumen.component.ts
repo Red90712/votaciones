@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { VotosService, ResumenVoto } from '../../services/votos.service';
 import { GraficaVotosComponent } from '../grafica-votos/grafica-votos.component';
 import { GraficaCandidatosComponent } from '../grafica-candidatos/grafica-candidatos.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-votos-resumen',
@@ -24,20 +26,34 @@ export class VotosResumenComponent implements OnInit {
 
   modoVereda: boolean = false;
 
-  constructor(private votosService: VotosService) {}
+  constructor(private votosService: VotosService,
+              private router: Router
+  ) {}
   
+irARegistroVoto() {
+  this.router.navigate(['/registro-voto']);
+}
 
-  ngOnInit(): void {
-    this.votosService.obtenerResumen().subscribe(data => {
-      this.resumenVotos = data;
-      this.actualizarVista();
-    });
-  }
 
-  alternarVista(): void {
-    this.modoVereda = !this.modoVereda;
+cargarDatos(): void {
+  const observable = this.modoVereda
+    ? this.votosService.obtenerResumenPorVereda()
+    : this.votosService.obtenerResumen();
+
+  observable.subscribe(data => {
+    this.resumenVotos = data;
     this.actualizarVista();
-  }
+  });
+}
+
+ngOnInit(): void {
+  this.cargarDatos(); 
+}
+
+alternarVista(): void {
+  this.modoVereda = !this.modoVereda;
+  this.cargarDatos();
+}
 
 actualizarVista(): void {
   let data = this.modoVereda
@@ -137,4 +153,3 @@ get resumenPorCandidato(): ResumenVoto[] {
 
 
 }
-

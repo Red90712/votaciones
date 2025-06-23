@@ -11,5 +11,7 @@ public interface VotoService {
     boolean yaVoto(int votanteId);
     List<ResumenVoto> obtenerResumenVotos();
     List<ResumenVoto> obtenerResumenPorVereda();
+    boolean insertar(int idVotante, int idCandidato);
+
 }
 

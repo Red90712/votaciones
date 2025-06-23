@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class conexionBD {
-    private static final String URL = "jdbc:postgresql://dpg-d0n48mre5dus73b05lag-a.oregon-postgres.render.com:5432/votos_bd_jr8a";
-    private static final String USER = "red";
-    private static final String PASSWORD = "C452UxftjlnmIvJU2w7lpaziYErhd4bO";
+    private static final String URL = "jdbc:mysql://localhost:3306/votos?useSSL=false&serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "sapote89";
 
     public static Connection obtenerConexion() throws SQLException {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            throw new SQLException("No se pudo cargar el driver de PostgreSQL", e);
+            throw new SQLException("No se pudo cargar el driver de MySQL", e);
         }
 
         return DriverManager.getConnection(URL, USER, PASSWORD);

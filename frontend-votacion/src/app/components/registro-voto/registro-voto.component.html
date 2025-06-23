@@ -1,0 +1,24 @@
+<div class="form-container">
+  <h2>Registrar Voto</h2>
+
+  <label for="nombre">Nombre del votante:</label>
+  <input type="text" id="nombre" [(ngModel)]="nombreVotante" />
+
+  <label for="vereda">Vereda:</label>
+  <select id="vereda" [(ngModel)]="veredaId">
+  <option *ngFor="let vereda of veredas" [value]="vereda.id">{{ vereda.nombre }}</option>
+  </select>
+
+  <label for="partido">Partido:</label>
+  <select id="partido" [(ngModel)]="partidoId" (change)="onPartidoChange()">
+  <option *ngFor="let p of partidos" [value]="p.id">{{ p.nombre }}</option>
+  </select>
+
+
+  <label for="candidato">Candidato:</label>
+  <select id="candidato" [(ngModel)]="candidatoId">
+  <option *ngFor="let c of candidatos" [value]="c.id">{{ c.nombre }}</option>
+  </select>
+
+  <button (click)="registrarVoto()">Registrar voto</button>
+</div>

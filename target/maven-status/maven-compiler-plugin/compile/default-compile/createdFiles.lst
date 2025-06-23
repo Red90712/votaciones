@@ -9,6 +9,7 @@ service\VotanteServiceImpl.class
 servlet\ResumenVeredaServlet.class
 servlet\VeredaServlet.class
 servlet\ResumenVotosServlet.class
+servlet\CandidatoServlet.class
 dao\VeredaDAOImpl.class
 model\ResumenVoto.class
 dao\VeredaDAO.class
@@ -22,9 +23,12 @@ dao\CandidatoDAOImpl.class
 service\CandidatoService.class
 dao\PartidoDAO.class
 service\PartidoService.class
+servlet\VotoServlet.class
+servlet\PartidoServlet.class
 service\VotoServiceImpl.class
 servlet\servlet.class
 service\VotoService.class
+servlet\RegistrarVotoServlet.class
 util\conexionBD.class
 model\Vereda.class
 service\CandidatoServiceImpl.class

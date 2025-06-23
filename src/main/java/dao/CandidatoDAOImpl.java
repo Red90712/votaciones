@@ -30,7 +30,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
                 candidatos.add(new Candidato(
                     rs.getInt("id"),
                     rs.getString("nombre"),
-                    rs.getInt("partido_id")
+                    rs.getInt("id_partido")
                 ));
             }
 
@@ -58,7 +58,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
                 candidato = new Candidato(
                     rs.getInt("id"),
                     rs.getString("nombre"),
-                    rs.getInt("partido_id")
+                    rs.getInt("id_partido")
                 );
             }
 
@@ -74,7 +74,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
     @Override
     public List<Candidato> obtenerPorPartido(int partidoId) {
         List<Candidato> candidatos = new ArrayList<>();
-        String sql = "SELECT * FROM candidato WHERE partido_id = ?";
+        String sql = "SELECT * FROM candidato WHERE id_partido = ?";
 
         try (Connection con = conexionBD.obtenerConexion();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class CandidatoDAOImpl implements CandidatoDAO {
                 candidatos.add(new Candidato(
                     rs.getInt("id"),
                     rs.getString("nombre"),
-                    rs.getInt("partido_id")
+                    rs.getInt("id_partido")
                 ));
             }
 

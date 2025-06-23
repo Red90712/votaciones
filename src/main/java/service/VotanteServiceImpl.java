@@ -28,4 +28,15 @@ public class VotanteServiceImpl implements VotanteService {
     public List<Votante> obtenerPorVereda(int veredaId) {
         return votanteDAO.obtenerPorVereda(veredaId);
     }
+
+    @Override
+    public Votante obtenerPorNombreYVereda(String nombre, int idVereda) {
+    return votanteDAO.obtenerPorNombreYVereda(nombre, idVereda);
+}
+
+    @Override
+    public int insertar(Votante votante) {
+    return votanteDAO.insertar(votante);
+}
+
 }

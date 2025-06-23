@@ -8,4 +8,6 @@ public interface VotoDAO {
     List<Voto> obtenerTodos();
     int contarVotosPorCandidato(int candidatoId);
     boolean yaVoto(int votanteId);
+    boolean insertar(int idVotante, int idCandidato);
+
 }
