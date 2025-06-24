@@ -47,8 +47,15 @@ public class VotoServiceImpl implements VotoService {
     }
 
     @Override
+    public boolean votoExiste(String nombreVotante, int idVereda) {
+    return votoDAO.existePorNombreYVereda(nombreVotante, idVereda);
+    }
+
+    @Override
 public List<ResumenVoto> obtenerResumenVotos() {
     List<ResumenVoto> resumen = new ArrayList<>();
+
+    
 
     String sql = """
     SELECT p.nombre AS partido,

@@ -79,17 +79,17 @@ export class RegistroVotoComponent {
 
     console.log('Enviando voto:', body);
 
-    this.http.post('http://localhost:8080/sistema-votacion/api/votos', body)
-      .subscribe({
-        next: () => {
-          Swal.fire('Éxito', 'Voto registrado correctamente', 'success');
-          this.limpiarFormulario();
-        },
-        error: (error) => {
-          console.error('Error al registrar voto:', error);
-          Swal.fire('Error', 'No se pudo registrar el voto', 'error');
-        }
-      });
+this.http.post('http://localhost:8080/sistema-votacion/api/votos', body)
+  .subscribe({
+    next: () => Swal.fire('Éxito', 'Voto registrado correctamente', 'success'),
+    error: (error) => {
+      if (error.status === 409) {
+        Swal.fire('Duplicado', 'Este votante ya registró su voto.', 'warning');
+      } else {
+        Swal.fire('Error', 'No se pudo registrar el voto', 'error');
+      }
+    }
+  });
   }
 
   limpiarFormulario() {

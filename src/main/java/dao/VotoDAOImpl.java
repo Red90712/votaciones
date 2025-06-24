@@ -107,4 +107,27 @@ public class VotoDAOImpl implements VotoDAO {
         }
         return false;
     }
+
+@Override
+public boolean existePorNombreYVereda(String nombre, int idVereda) {
+    String sql = """
+        SELECT COUNT(*) 
+        FROM voto v
+        JOIN votante vt ON v.id_votante = vt.id
+        WHERE vt.nombre = ? AND vt.id_vereda = ?
+    """;
+
+    try (Connection con = conexionBD.obtenerConexion();
+         PreparedStatement stmt = con.prepareStatement(sql)) {
+        stmt.setString(1, nombre);
+        stmt.setInt(2, idVereda);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 }

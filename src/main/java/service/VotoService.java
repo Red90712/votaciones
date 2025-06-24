@@ -12,6 +12,6 @@ public interface VotoService {
     List<ResumenVoto> obtenerResumenVotos();
     List<ResumenVoto> obtenerResumenPorVereda();
     boolean insertar(int idVotante, int idCandidato);
-
+    boolean votoExiste(String nombreVotante, int idVereda);
 }
 

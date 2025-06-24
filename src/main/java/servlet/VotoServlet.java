@@ -33,9 +33,14 @@ public class VotoServlet extends HttpServlet {
             int idVereda = Integer.parseInt(json.get("veredaId").getAsString());
             int idCandidato = Integer.parseInt(json.get("candidatoId").getAsString());
 
-            int idVotante;
+            // Validar si ya existe un voto con ese votante
+            if (votoService.votoExiste(nombreVotante, idVereda)) {
+                response.setStatus(HttpServletResponse.SC_CONFLICT); // 409
+                response.getWriter().write("{\"mensaje\":\"Este votante ya ha votado en esta vereda\"}");
+                return;
+            }
 
-            // Buscar votante por nombre y vereda
+            int idVotante;
             Votante votante = votanteService.obtenerPorNombreYVereda(nombreVotante, idVereda);
 
             if (votante == null) {
@@ -43,7 +48,7 @@ public class VotoServlet extends HttpServlet {
                 votante.setNombre(nombreVotante);
                 votante.setIdVereda(idVereda);
 
-                idVotante = votanteService.insertar(votante);  // ahora devuelve el ID generado
+                idVotante = votanteService.insertar(votante);  // debe retornar el ID generado
             } else {
                 idVotante = votante.getId();
             }

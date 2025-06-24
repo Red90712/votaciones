@@ -23,6 +23,7 @@ dao\CandidatoDAOImpl.class
 service\CandidatoService.class
 dao\PartidoDAO.class
 service\PartidoService.class
+servlet\cargarExcelServlet.class
 servlet\VotoServlet.class
 servlet\PartidoServlet.class
 service\VotoServiceImpl.class

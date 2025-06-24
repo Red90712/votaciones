@@ -28,8 +28,12 @@ export class VotosResumenComponent implements OnInit {
 
   constructor(private votosService: VotosService,
               private router: Router
+              
   ) {}
-  
+
+irACargarExcel() {
+  this.router.navigate(['/cargar-excel']);
+}
 irARegistroVoto() {
   this.router.navigate(['/registro-voto']);
 }

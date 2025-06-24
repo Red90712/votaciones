@@ -1,0 +1,19 @@
+<h2>Cargar archivo Excel</h2>
+<input type="file" (change)="onFileChange($event)" />
+<p *ngIf="datosExcel.length > 0">Archivo cargado correctamente: {{ datosExcel.length }} registros</p>
+
+<h3>Datos cargados:</h3>
+<table *ngIf="datosExcel.length > 0" border="1">
+  <tr>
+    <th>candidatoId</th>
+    <th>nombreVotante</th>
+    <th>veredaId</th>
+  </tr>
+  <tr *ngFor="let d of datosExcel">
+    <td>{{ d.candidatoId }}</td>
+    <td>{{ d.nombreVotante }}</td>
+    <td>{{ d.veredaId }}</td>
+  </tr>
+</table>
+
+<button (click)="guardarVotos()" [disabled]="datosExcel.length === 0">Guardar en BD</button>

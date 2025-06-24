@@ -9,5 +9,5 @@ public interface VotoDAO {
     int contarVotosPorCandidato(int candidatoId);
     boolean yaVoto(int votanteId);
     boolean insertar(int idVotante, int idCandidato);
-
+    boolean existePorNombreYVereda(String nombre, int idVereda);
 }
